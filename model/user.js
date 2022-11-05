@@ -1,5 +1,6 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../config/db')
+const DoctorsComment = require("./doctorsComment")
 
 const User = sequelize.define('user', {
   id: {
@@ -70,5 +71,7 @@ const User = sequelize.define('user', {
     },
   },
 })
+
+User.hasMany(DoctorsComment)
 
 module.exports = User

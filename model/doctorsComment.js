@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../config/db')
+const User = require("./user")
+const Diagnosis = require("./diagnosis") 
 
 const DoctorsComment = sequelize.define('doctorscomment', {
   id: {
@@ -32,5 +34,8 @@ const DoctorsComment = sequelize.define('doctorscomment', {
     },
   },
 })
+
+DoctorsComment.belongsTo(Diagnosis)
+DoctorsComment.belongsTo(User)
 
 module.exports = DoctorsComment

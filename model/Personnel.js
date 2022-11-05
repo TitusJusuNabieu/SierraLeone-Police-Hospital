@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../config/db')
-
+const Dependant = require("./dependant")
+const Diagnosis = require("./diagnosis")
 const Personnel = sequelize.define('personnel', {
   pinCode: {
     type: Sequelize.INTEGER,
@@ -111,5 +112,8 @@ const Personnel = sequelize.define('personnel', {
     },
   },
 })
+
+Personnel.hasMany(Dependant)
+Personnel.hasMany(Diagnosis)
 
 module.exports = Personnel
