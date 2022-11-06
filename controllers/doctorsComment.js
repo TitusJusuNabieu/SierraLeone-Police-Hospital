@@ -13,6 +13,8 @@ exports.create = async(req, res) => {
         const doctorsComment = {
             commentBody: req.body.commentBody,
             attachment: req.body.attachment,
+            userId:req.body.userId,
+            diagnosisId:req.body.DiagnosisId
           };
           const docmmt = await DoctorsComment.create(doctorsComment)
           res.status(200).json({"data":docmmt})

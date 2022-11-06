@@ -68,3 +68,16 @@ exports.me = async (req, res) => {
     })
   }
 }
+
+// Update a User profile 
+exports.update = async(req, res) => {
+  try{
+      const _id = req.params.id;
+     const usr = await User.update( req.body,
+      { where: { id: _id } })
+      res.status(200).json(diag==0?{message:`User not found`}:{message:`User Profile was updated succesfully`})
+  }catch(e){
+      res.json({ message:
+          e.message || "Some occurred while updating user profile"})
+  }
+};

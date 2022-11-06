@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../config/db')
-const DoctorsComment = require("./doctorsComment")
-const Personnel = require("./Personnel")
-const Dependant = require("./dependant")
+
 
 const Diagnosis = sequelize.define('diagnosis', {
   id: {
@@ -42,8 +40,6 @@ const Diagnosis = sequelize.define('diagnosis', {
   },
 })
 
-Diagnosis.belongsTo(Personnel)
-Diagnosis.belongsTo(Dependant)
-Diagnosis.hasMany(DoctorsComment)
+
 
 module.exports = Diagnosis

@@ -1,6 +1,10 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../config/db')
-const DoctorsComment = require("./doctorsComment")
+const DoctorsComment = require("../model/doctorsComment")
+// const User = require("./user")
+const Diagnosis = require("./diagnosis")
+const Personnel = require("./Personnel")
+const Dependant = require("./dependant")
 
 const User = sequelize.define('user', {
   id: {
@@ -71,7 +75,18 @@ const User = sequelize.define('user', {
     },
   },
 })
-
 User.hasMany(DoctorsComment)
+Personnel.hasMany(Dependant,{foreignKey:'pinCode'})
+Personnel.hasMany(Diagnosis,{foreignKey:'pinCode'})
+Dependant.belongsTo(Personnel,{foreignKey:{name:'pinCode',allowNull:false}})
+Dependant.hasMany(Diagnosis)
+Diagnosis.belongsTo(Personnel,{foreignKey:'pinCode'})
+Diagnosis.belongsTo(Dependant)
+Diagnosis.hasMany(DoctorsComment)
+DoctorsComment.belongsTo(Diagnosis)
+DoctorsComment.belongsTo(User,{foreignKey:{
+  allowNull:false
+}})
 
 module.exports = User
+

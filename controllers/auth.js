@@ -35,13 +35,13 @@ exports.login = async (req, res) => {
     user = _.pick(user[0].dataValues, [
       'id',
       'email',
+      'password',
       'firstName',
       'lastName',
       'phone',
       'department',
-      'region',
-      'isAdmin',
       'designation',
+      'role',
     ])
 
     const token = jwt.sign({ user: user }, process.env.JWT)

@@ -14,6 +14,8 @@ exports.create = async(req, res) => {
             Diagnosistype: req.body.Diagnosistype,
             disease: req.body.disease,
             disposalOfCase: req.body.disposalOfCase,
+            dependantId:req.body.DependantId,
+            personnelPinCode:req.body.PersonnelPinCode
     
           };
           const diag = await Diagnosis.create(diagnosis)

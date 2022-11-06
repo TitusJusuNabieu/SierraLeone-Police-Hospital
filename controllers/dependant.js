@@ -22,6 +22,7 @@ exports.create = async(req, res) => {
             documentOfProof: req.body.documentOfProof,
             dateOfBirth: req.body.dateOfBirth,
             dateofExit: req.body.dateofExit,
+            personnelPinCode:req.body.PersonnelPinCode
     
           };
           const dpndt = await Dependant.create(dependant)

@@ -6,7 +6,7 @@ const DependantController = require('../controllers/dependant')
 
 router.get('/', auth, DependantController.findAll)
 
-router.post('/', auth, DependantController.create)
+router.post('/', [auth, isAdmin], DependantController.create)
 
 router.get('/:id', auth, DependantController.findOne)
 
