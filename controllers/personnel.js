@@ -1,14 +1,14 @@
 const Sequelize = require('sequelize');
-const Op = Sequelize.Op;
+const Dependant = require('../model/dependant');
+const Diagnosis = require('../model/diagnose');
 const Personnel = require('../model/Personnel')
-
 
 // creat client record
 exports.create = async(req, res) => {
-
-   
-
+    let persPhoto = req.headers.host + "/" + req.file.path
+    // console.log(req.headers.host)
       try {
+
 
         const personnel = {
             pinCode: req.body.pinCode,
@@ -19,8 +19,7 @@ exports.create = async(req, res) => {
             currentAddress: req.body.currentAddress,
             permanentAddress: req.body.permanentAddress,
             gender: req.body.gender,
-            photo: req.body.photo,
-            role: req.body.role,
+            photo:persPhoto,
             active: req.body.active,
             dateOfBirth: req.body.dateOfBirth,
             dateofEnlistment: req.body.dateofEnlistment,
@@ -42,7 +41,14 @@ exports.findAll = async(req, res) => {
 
 
     try{
-        const psnl = await Personnel.findAll()
+        const psnl = await Personnel.findAll({include:[{
+            model:Dependant,
+            as:"dependants",
+            required: false,
+        },{
+            model:Diagnosis,
+            required: false,
+        }]})
         res.status(200).json({"data":psnl})
     }catch(e){
         res.json({ message:
@@ -55,8 +61,13 @@ exports.findAll = async(req, res) => {
 exports.findOne = async(req, res) => {
     try{
         const pinCode = req.params.pinCode;
-        const pnsl = await Personnel.findByPk(pinCode)
-        res.status(200).json({"data":psnl})
+        const pnsl = await Personnel.findByPk({pinCode,
+        include:[{
+            model:Dependant,
+            as:"dependants",
+            required: false,
+        }]})
+        res.status(200).json({"data":pnsl})
     }catch(e){
         res.json({ message:
             e.message || "Some occurred while creating the Personnel."})

@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../config/db')
+
+
 const Personnel = sequelize.define('personnel', {
   pinCode: {
     type: Sequelize.INTEGER,
@@ -65,15 +67,7 @@ const Personnel = sequelize.define('personnel', {
       notNull: true,
     },
   },
-  role: {
-    type: Sequelize.STRING,
-    allowNull: false,
-    defaultValue: false,
-    validate: {
-      notNull: true,
-    },
-  },
-  active: {
+  status: {
     type: Sequelize.BOOLEAN,
     allowNull: false,
     defaultValue: false,
@@ -83,28 +77,21 @@ const Personnel = sequelize.define('personnel', {
   },
   dateOfBirth: {
     type: Sequelize.DATEONLY,
-    defaultValue: Sequelize.NOW,
+    allowNull: false,
     validate: {
       isDate: true,
     },
   },
   dateofEnlistment: {
     type: Sequelize.DATEONLY,
-    defaultValue: Sequelize.NOW,
+    allowNull: false,
     validate: {
       isDate: true,
     },
   },
   dateofExit: {
     type: Sequelize.DATEONLY,
-    defaultValue: Sequelize.NOW,
-    validate: {
-      isDate: true,
-    },
-  },
-  date: {
-    type: Sequelize.DATEONLY,
-    defaultValue: Sequelize.NOW,
+    allowNull: false,
     validate: {
       isDate: true,
     },

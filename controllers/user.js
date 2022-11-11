@@ -57,7 +57,6 @@ exports.me = async (req, res) => {
       'firstName',
       'lastName',
       'phone',
-      'department',
       'designation',
       'role',
       ]),

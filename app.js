@@ -7,13 +7,16 @@ const personnel = require('./routes/personnel')
 const diagnosis = require('./routes/diagnosis')
 const doctorsComment = require('./routes/doctorsComment')
 const Auth = require('./routes/auth')
+const bodyParser = require("body-parser");
 const User = require('./routes/user')
 const helmet = require('helmet')
 const morgan = require('morgan')
 
 app.use(cors())
-app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 app.use(helmet())
+app.use('/uploads', express.static('uploads'));
 
 if (app.get('env') == 'development') {
   app.use(morgan('tiny'))

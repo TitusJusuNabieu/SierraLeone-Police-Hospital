@@ -41,7 +41,7 @@ const Dependant = sequelize.define("dependant",{
           isDate: true,
         },
       },
-   parmanentAddress:{
+   permanentAddress:{
         type:Sequelize.STRING,
         allowNull:false,
         validate: {

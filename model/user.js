@@ -2,7 +2,7 @@ const Sequelize = require('sequelize')
 const sequelize = require('../config/db')
 const DoctorsComment = require("../model/doctorsComment")
 // const User = require("./user")
-const Diagnosis = require("./diagnosis")
+const Diagnose = require("./diagnose")
 const Personnel = require("./Personnel")
 const Dependant = require("./dependant")
 
@@ -62,7 +62,7 @@ const User = sequelize.define('user', {
   role: {
     type: Sequelize.STRING,
     allowNull: false,
-    defaultValue: false,
+    defaultValue: "user",
     validate: {
       notNull: true,
     },
@@ -75,18 +75,20 @@ const User = sequelize.define('user', {
     },
   },
 })
+
 User.hasMany(DoctorsComment)
-Personnel.hasMany(Dependant,{foreignKey:'pinCode'})
-Personnel.hasMany(Diagnosis,{foreignKey:'pinCode'})
-Dependant.belongsTo(Personnel,{foreignKey:{name:'pinCode',allowNull:false}})
-Dependant.hasMany(Diagnosis)
-Diagnosis.belongsTo(Personnel,{foreignKey:'pinCode'})
-Diagnosis.belongsTo(Dependant)
-Diagnosis.hasMany(DoctorsComment)
-DoctorsComment.belongsTo(Diagnosis)
 DoctorsComment.belongsTo(User,{foreignKey:{
   allowNull:false
 }})
+Personnel.hasMany(Dependant,{foreignKey:'pinCode'})
+Dependant.belongsTo(Personnel,{foreignKey:{name:'pinCode',allowNull:false}})
+Personnel.hasMany(Diagnose,{foreignKey:'pinCode'})
+Diagnose.belongsTo(Personnel,{foreignKey:'pinCode'})
+Dependant.hasMany(Diagnose)
+Diagnose.belongsTo(Dependant)
+Diagnose.hasMany(DoctorsComment)
+DoctorsComment.belongsTo(Diagnose)
+
 
 module.exports = User
 

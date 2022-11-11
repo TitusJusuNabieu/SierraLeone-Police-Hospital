@@ -6,6 +6,7 @@ const userCont = require('../controllers/user')
 
 router.get('/me', auth, userCont.me)
 
-router.post('/',auth,isAdmin, userCont.create)
+router.post('/',auth,isAdmin,userCont.create)
+// auth,isAdmin,
 
 module.exports = router

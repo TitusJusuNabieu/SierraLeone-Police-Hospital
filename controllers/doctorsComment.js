@@ -1,18 +1,20 @@
 const Sequelize = require('sequelize');
+const Diagnosis = require('../model/diagnose');
 const Op = Sequelize.Op;
-const DoctorsComment = require('../model/DoctorsComment')
+const DoctorsComment = require('../model/DoctorsComment');
+const User = require('../model/user');
 
 
 // creat client record
 exports.create = async(req, res) => {
 
-   
+   let commentAttachment = req.file.path
 
       try {
 
         const doctorsComment = {
             commentBody: req.body.commentBody,
-            attachment: req.body.attachment,
+            attachment: commentAttachment,
             userId:req.body.userId,
             diagnosisId:req.body.DiagnosisId
           };
@@ -30,7 +32,15 @@ exports.findAll = async(req, res) => {
 
 
     try{
-        const docmmt = await DoctorsComment.findAll()
+        const docmmt = await DoctorsComment.findAll({include:[{
+            model:Diagnosis,
+            as:"Diagnosis",
+            required: false,
+        },{
+            model:User,
+            as:"User",
+            required: false,
+        }]})
         res.status(200).json({"data":docmmt})
     }catch(e){
         res.json({ message:
@@ -43,7 +53,15 @@ exports.findAll = async(req, res) => {
 exports.findOne = async(req, res) => {
     try{
         const id = req.params.pinCode;
-        const docmmt = await DoctorsComment.findByPk(id)
+        const docmmt = await DoctorsComment.findByPk({id,include:[{
+            model:Diagnosis,
+            as:"Diagnosis",
+            required: false,
+        },{
+            model:User,
+            as:"User",
+            required: false,
+        }]})
         res.status(200).json({"data":docmmt})
     }catch(e){
         res.json({ message:
@@ -52,9 +70,20 @@ exports.findOne = async(req, res) => {
 };
 // Update a DoctorsComments by the id in the request
 exports.update = async(req, res) => {
+
+    let commentAttachment = req.headers.host + "/" + req.file.path
+
     try{
         const _id = req.params.id;
-       const docmmt = await DoctorsComment.update( req.body,
+
+        const doctorsComment = {
+            commentBody: req.body.commentBody,
+            attachment: commentAttachment,
+            userId:req.body.userId,
+            diagnosisId:req.body.DiagnosisId
+          };
+
+       const docmmt = await DoctorsComment.update( doctorsComment,
         { where: { id: _id } })
         res.status(200).json(docmmt==0?{message:`DoctorsComment not found`}:{message:`DoctorsComment was updated succesfully`})
     }catch(e){

@@ -23,15 +23,7 @@ const DoctorsComment = sequelize.define('doctorscomment', {
     validate: {
       notNull: true,
     },
-  },
-
-  date: {
-    type: Sequelize.DATEONLY,
-    defaultValue: Sequelize.NOW,
-    validate: {
-      isDate: true,
-    },
-  },
+  }
 })
 
 
